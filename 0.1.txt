@@ -1,0 +1,27 @@
+Save gets clicked
+Form gets submitted via post method to https://studies.cs.helsinki.fi/exampleapp/new_note
+
+The server does sth with the data, my best guess is adding it to a database because it is still visible after multiple reloads
+
+Server responds with a 302 status code, which calls for a redirect to the initial location, namely /exampleapp/notes
+This reloads the initial page.
+
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: main.js
+
+js code calls for getting (altered) jason data from server, so
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: data.json
+browser->server: HTTP GET https://studies.cs.helsinki.fi/favicon.ico
+server-->browser: favicon.ico
+
+when the data has been fetched, the browser executes an event handler, which renders the notes to the page using the DOM-API
+
+
+

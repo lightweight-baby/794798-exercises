@@ -1,0 +1,11 @@
+Save gets clicked
+
+form.onsubmit gets called in spa.js
+sendToServer(note) gets called in spa.js
+
+the last function is respnsible for the post method
+browser-->server: send user input HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+This time, the data is sent in json format and no redirect happens. 
+The server automatically renders the website, so that a page reload becomes unnnecessary.
+
+Finally, the server gives out a status code 201 created to indicate that the server is done with its job.
