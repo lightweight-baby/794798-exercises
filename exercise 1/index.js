@@ -9,12 +9,37 @@ const Header = (props) => {
   )
 }
 
+const Part1 = (props) => {
+  //i guess that the three different parts can be looped through somehow, this seems inefficient
+  return(
+    <>
+    <p>{props.text} {props.nr}</p>
+    </>
+  )
+}
+
+const Part2 = (props) => {
+  return(
+    <>
+    <p>{props.text} {props.nr}</p>
+    </>
+  )
+}
+
+const Part3 = (props) => {
+  return(
+    <>
+    <p>{props.text} {props.nr}</p>
+    </>
+  )
+}
+
 const Content = (props) => {
   return(
     <>
-    <p>{props.part1} {props.exercises1}</p>
-    <p>{props.part2} {props.exercises2}</p>
-    <p>{props.part3} {props.exercises3}</p>
+    <Part1 text={props.part1} nr={props.exercises1}/>
+    <Part2 text={props.part2} nr={props.exercises2}/>
+    <Part3 text={props.part3} nr={props.exercises3}/>
     </>
   )
 }
