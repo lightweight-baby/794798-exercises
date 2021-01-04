@@ -5,8 +5,7 @@ app.use(express.json()) //json parser
 const morgan = require('morgan')
 app.use(morgan('dev')) //console logging
 
-const cors = require('cors')
-app.use(cors())
+
 
 
 
