@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+#confidential
+.env
+
 # production
 
 
