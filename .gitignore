@@ -1,0 +1,32 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+exercise 3/frontend1/node_modules
+exercise 3/backend/node_modules
+*.pnp
+*.pnp.js
+
+# testing
+/coverage
+
+#confidential
+exercise 3/backend/.env
+
+# production
+exercise 3/backend/build
+exercise 3/frontend1/build
+exercise 3/frontend1/public
+
+#this file is not used actually but i dont want to delete it.
+exercise 3/backend/mongo.js
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
