@@ -14,3 +14,4 @@
 #package lock.json unnecessary
 /frontend1/package-lock.json
 /backend/package-lock.json
+package-lock.json
