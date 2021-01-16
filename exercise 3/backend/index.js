@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config() //for confidential info
 
 const express = require('express')
 const app = express()

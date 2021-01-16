@@ -1,7 +1,7 @@
 //mongoose specific code here
 
+require('dotenv').config() //for confidential info
 //connect back end to data base
-require('dotenv').config()
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
