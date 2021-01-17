@@ -35,6 +35,7 @@ app.post('/api/persons', (request, response, next) => {
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(people => {
     //people is an array containing all db entries
+    console.log('inside app.get')
     response.json(people)
   })
 })
