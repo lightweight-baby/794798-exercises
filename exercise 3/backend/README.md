@@ -16,5 +16,5 @@ You will also see any lint errors in the console.
 
 ### `heroku open`
 
-open my app in heroku at https://phonebook-3-794798.herokuapp.com/
+open my app in heroku at https://v2-794798-phonebook.herokuapp.com/
 When I open this adress, everything works. I hope this is the case for you aswell!
