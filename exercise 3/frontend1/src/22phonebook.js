@@ -92,7 +92,6 @@ const PersonForm = (props) => {
       const newEntry = {
         name: newName,
         number : newPhone,
-        id: persons[persons.length-1].id + 1,
       }
       //add name to db
       contactService
@@ -100,7 +99,8 @@ const PersonForm = (props) => {
       .then(createdPerson => {
         //add name to state array
         //createdPerson.data = newEntry
-        setPersons(persons.concat(newEntry))
+        //important here to concat wit createdPerson.data! otherwise you dont get the correct object
+        setPersons(persons.concat(createdPerson.data))
         setNotification([`'${newName}' created.`, false])
         vanish()
       })
