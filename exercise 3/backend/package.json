@@ -4,6 +4,7 @@
   "description": "for phonebook exercise",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -23,7 +24,7 @@
     "lint": "eslint .",
     "build:ui": "rm -rf build && cd C:/Users/49157/OneDrive/Documents/Studies/2.2/tryout web dev/794798-exercises/exercise 3/frontend1 && npm run build --prod && cp -r build C:/Users/49157/OneDrive/Documents/Studies/2.2/tryout web dev/794798-exercises/exercise 3/backend",
     "deploy": "git push heroku main",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",    
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
   "repository": {
