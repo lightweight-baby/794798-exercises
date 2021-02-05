@@ -1,24 +1,15 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 node_modules/
 package-lock*
-.env
+*.env
 
 # dependencies
-exercise 3/frontend1/node_modules
-exercise 3/backend/node_modules
 *.pnp
 *.pnp.js
 
 # testing
 /coverage
 
-#confidential
-exercise 3/backend/.env
-
-# production
-exercise 3/backend/build
-exercise 3/frontend1/build
-exercise 3/frontend1/public
+build/
 
 #this file is not used actually but i dont want to delete it.
 exercise 3/backend/mongo.js
