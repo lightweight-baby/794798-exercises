@@ -1,0 +1,39 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "for phonebook exercise",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.10",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-plugin-react": "^7.22.0",
+    "nodemon": "^2.0.6"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "build:ui": "rm -rf build && cd C:/Users/49157/OneDrive/Documents/Studies/2.2/tryout web dev/794798-exercises/exercise 3/frontend1 && npm run build --prod && cp -r build C:/Users/49157/OneDrive/Documents/Studies/2.2/tryout web dev/794798-exercises/exercise 3/backend",
+    "deploy": "git push heroku main",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",    
+    "logs:prod": "heroku logs --tail"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lightweight-baby/794798-exercises.git"
+  },
+  "author": "Patrik Jüngling",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lightweight-baby/794798-exercises/issues"
+  },
+  "homepage": "https://github.com/lightweight-baby/794798-exercises#readme"
+}
