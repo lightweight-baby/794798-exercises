@@ -14,6 +14,9 @@ const mongoose = require('mongoose')
 
 logger.info('connecting to MONGODB_URI, port', config.PORT)
 
+mongoose.set('useFindAndModify', false) //mongoose deprecation warnings
+mongoose.set('useCreateIndex', true)
+
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
     .then(() => {
         logger.info('connected to MongoDB')

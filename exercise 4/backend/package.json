@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/lightweight-baby/794798-exercises#readme",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "verbose": "false"
   }
 }

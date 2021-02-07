@@ -3,17 +3,20 @@ const supertest = require('supertest')
 const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
+
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 //make sure db is in same state for each test. reset db so to say
-
-
 beforeEach(async () => {
     await Blog.deleteMany({})
-    let blogObject = new Blog(helper.initialBlogs[0])
-    await blogObject.save()
-    blogObject = new Blog(helper.initialBlogs[1])
-    await blogObject.save()
+    await User.deleteMany({})
+
+    const blogObjects = helper.initialBlogs
+        .map(blog => new Blog(blog))
+
+    const promiseArray = blogObjects.map(blog => blog.save())
+    await Promise.all(promiseArray)
 })
 
 
@@ -40,43 +43,134 @@ describe('when there are 2 blogs in the db initially,', () => {
 })
 
 
-describe('add blogs to db', () => {
-    test('succeeds with valid data', async () => {
+describe('when a blog is posted to api', () => {
+    let headers
+
+    beforeEach(async () => {
+        const newUser = {
+            username: 'janedoez',
+            name: 'Jane Z. Doe',
+            password: 'password',
+        }
+
+        await api
+            .post('/api/users')
+            .send(newUser)
+
+        const result = await api
+            .post('/api/login')
+            .send(newUser)
+
+        headers = {
+            'Authorization': `bearer ${result.body.token}`
+        }
+    })
+
+    test('it is saved to database', async () => {
         const newBlog = {
-            title: 'Stonks went down wtf',
-            author: 'Mia',
-            url: 'AmericanEconomicReview.com/forum/stonks',
-            likes: 420
+            title: 'Great developer experience',
+            author: 'Hector Ramos',
+            url: 'https://jestjs.io/blog/2017/01/30/a-great-developer-experience',
+            likes: 7
         }
 
         await api
             .post('/api/blogs')
             .send(newBlog)
-            .expect(200)
+            .set(headers)
+            .expect(201)
             .expect('Content-Type', /application\/json/)
 
         const blogsAtEnd = await helper.blogsInDb()
-        expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+        expect(blogsAtEnd.length).toBe(helper.initialBlogs.length + 1)
 
-        const titles = blogsAtEnd.map(r => r.title)
+        const titles = blogsAtEnd.map(b => b.title)
         expect(titles).toContain(
-            'Stonks went down wtf'
+            'Great developer experience'
         )
     })
 
-    test('fails with status code 400 if data invalid', async () => {
+    test('likes get value 0 as default', async () => {
         const newBlog = {
-            likes: 20
+            title: 'Blazing Fast Delightful Testing',
+            author: 'Rick Hanlon',
+            url: 'https://jestjs.io/blog/2017/01/30/a-great-developer-experience'
         }
 
         await api
             .post('/api/blogs')
             .send(newBlog)
-            .expect(400)
+            .set(headers)
+            .expect(201)
+            .expect('Content-Type', /application\/json/)
 
         const blogsAtEnd = await helper.blogsInDb()
+        const added = blogsAtEnd.find(b => b.url === newBlog.url)
 
-        expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+        expect(added.likes).toBe(0)
+    })
+
+    test('operation fails with proper error if url is missing', async () => {
+        const newBlog = {
+            title: 'Blazing Fast Delightful Testing',
+            author: 'Rick Hanlon',
+        }
+
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .set(headers)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+    })
+
+    test('operation fails with proper error if token is missing', async () => {
+        const newBlog = {
+            title: 'Blazing Fast Delightful Testing',
+            author: 'Rick Hanlon',
+        }
+
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(401)
+            .expect('Content-Type', /application\/json/)
+    })
+
+    describe('and it is saved to database', () => {
+        let result
+        beforeEach(async () => {
+            const newBlog = {
+                title: 'Great developer experience',
+                author: 'Hector Ramos',
+                url: 'https://jestjs.io/blog/2017/01/30/a-great-developer-experience',
+                likes: 7
+            }
+
+            result = await api
+                .post('/api/blogs')
+                .send(newBlog)
+                .set(headers)
+        })
+
+        test('it can be removed', async () => {
+            const aBlog = result.body
+            console.log('result.body:', aBlog)
+            console.log('headers:', headers)
+            const initialBlogs = await helper.blogsInDb()
+            await api
+                .delete(`/api/blogs/${aBlog.id}`)
+                .set(headers)
+                .expect(204)
+
+            const blogsAtEnd = await helper.blogsInDb()
+            expect(blogsAtEnd.length).toBe(initialBlogs.length - 1)
+
+            const titles = blogsAtEnd.map(b => b.title)
+            expect(titles).not.toContain(
+                aBlog.title
+            )
+        })
     })
 })
 
@@ -116,26 +210,7 @@ describe('view specific blog', () => {
 })
 
 
-describe('deletion of a note', () => {
-    test('a blog can be deleted', async () => {
-        const blogsAtStart = await helper.blogsInDb()
-        const blogToDelete = blogsAtStart[0]
 
-        await api
-            .delete(`/api/blogs/${blogToDelete.id}`)
-            .expect(204)
-
-        const blogsAtEnd = await helper.blogsInDb()
-
-        expect(blogsAtEnd).toHaveLength(
-            helper.initialBlogs.length - 1
-        )
-
-        const titles = blogsAtEnd.map(r => r.title)
-
-        expect(titles).not.toContain(blogToDelete.title)
-    })
-})
 
 
 
