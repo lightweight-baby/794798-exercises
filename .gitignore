@@ -1,8 +1,14 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+#all node_modules directories
+node_modules/
+
+#all package-lock.json files
+package-lock*
+
+#secret
+*.env
 
 # dependencies
-exercise 3/frontend1/node_modules
-exercise 3/backend/node_modules
 *.pnp
 *.pnp.js
 
